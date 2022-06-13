@@ -1,5 +1,9 @@
 from confluent_kafka.avro import AvroConsumer
 import json
+import toml
+from pathlib import Path
+from upload_service import DataIngestionService
+from decouple import config
 
 def save_data(data, id):
     with open(f"consumed_data/mydata-{id}.json", "w") as final:
@@ -10,7 +14,8 @@ def read_messages():
                        "schema.registry.url": "http://schemaregistry.fractal-kafka.ovh",
                        "group.id": "taxirides.avro.consumer.1",
                        "auto.offset.reset": "earliest"}
-
+    cfg = toml.load(Path.cwd().joinpath("config/config.toml"))
+    data_uploader = DataIngestionService(cfg=cfg)
     consumer = AvroConsumer(consumer_config)
     consumer.subscribe(["dummy-taxi-rides"])
     data = []
@@ -38,4 +43,6 @@ def read_messages():
 
 
 if __name__ == "__main__":
-    read_messages()
+    print(config('aws_access_key_id'))
+    #read_messages()
+    
