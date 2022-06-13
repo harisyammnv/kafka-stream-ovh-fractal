@@ -6,12 +6,12 @@ from json import dumps
 import random
 
 KAFKA_TOPIC_NAME_CONS = "dummy-credit-card-transactions"
-KAFKA_BOOTSTRAP_SERVER_CONS = "141.95.96.132:9092"
+KAFKA_BOOTSTRAP_SERVER_CONS = "152.228.251.135:9092" # kafka-bs.fractal-kafka.ovh:9092
 
 if __name__ == "__main__":
     print("Simple Kafka Producer Application Started ...!!!")
     
-    kafka_producer_obj = KafkaProducer(bootstrap_server = KAFKA_BOOTSTRAP_SERVER_CONS,
+    kafka_producer_obj = KafkaProducer(bootstrap_servers = KAFKA_BOOTSTRAP_SERVER_CONS,
                                        value_serializer = lambda x: dumps(x).encode('utf-8'),
                                        acks="all")
     transaction_card_type = ["Visa", "MasterCard", "Maestro"]

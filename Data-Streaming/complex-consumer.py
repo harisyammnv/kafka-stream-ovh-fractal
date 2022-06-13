@@ -2,7 +2,7 @@ from confluent_kafka.avro import AvroConsumer
 import json
 
 def save_data(data, id):
-    with open("consumed_data/mydata-{id}.json", "w") as final:
+    with open(f"consumed_data/mydata-{id}.json", "w") as final:
         json.dump(data, final)
 
 def read_messages():
@@ -12,7 +12,7 @@ def read_messages():
                        "auto.offset.reset": "earliest"}
 
     consumer = AvroConsumer(consumer_config)
-    consumer.subscribe(["nyc_yellow_taxi_rides"])
+    consumer.subscribe(["dummy-taxi-rides"])
     data = []
     id = 0
     while(True):
@@ -22,8 +22,8 @@ def read_messages():
             print(f"Exception while trying to poll messages - {e}")
         else:
             if message:
-                data.append(message)
-                if len(data) > 5:
+                data.append(message.value())
+                if len(data) > 100:
                     id+=1
                     save_data(data, id=id)
                     data.clear()

@@ -33,7 +33,7 @@ def send_record():
                  "payment_type": int(row[9]), "total_amount": float(row[16])}
 
         try:
-            producer.produce(topic='nyc_yellow_taxi_rides', key=key, value=value)
+            producer.produce(topic='dummy-taxi-rides', key=key, value=value)
         except Exception as e:
             print(f"Exception while producing record value - {value}: {e}")
         else:
