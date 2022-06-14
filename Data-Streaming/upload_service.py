@@ -3,9 +3,9 @@ import botocore.config as boto_config
 import time
 import io
 from pathlib import Path
-from kafka import KafkaConsumer
 from kafka.consumer.fetcher import ConsumerRecord
-from decouple import config
+import os
+from dotenv import load_dotenv
 
 class DataIngestionServiceException(Exception):
     pass
@@ -13,9 +13,10 @@ class DataIngestionServiceException(Exception):
 class DataIngestionService:
     def __init__(self, cfg) -> None:
         print("Initializing data ingestion service")
+        load_dotenv()
         session = boto3.Session(
-            aws_access_key_id=config('aws_access_key_id,'),
-            aws_secret_access_key=config('aws_secret_access_key')
+            aws_access_key_id=os.environ["aws_access_key_id"],
+            aws_secret_access_key=os.environ["aws_secret_access_key"]
         )
         self.s3_client = session.client(
             's3',

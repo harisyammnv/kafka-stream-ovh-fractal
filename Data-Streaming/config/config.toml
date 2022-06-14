@@ -4,8 +4,6 @@ kafka_schema_registry = 'http://schemaregistry.fractal-kafka.ovh'
 s3_region='de'
 
 [S3]
-aws_access_key_id = ''
-aws_secret_access_key = ''
 image_bucket = 'testMultimediaFractal'
 data_bucket = 'testDataFractal'
 s3_region = 'de'

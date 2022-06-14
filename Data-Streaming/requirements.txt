@@ -6,4 +6,4 @@ faust
 fastavro
 boto3==1.21.19
 toml
-python-decouple
+python-dotenv
