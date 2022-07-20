@@ -5,22 +5,22 @@ import toml
 from pathlib import Path
 from upload_service import DataIngestionService
 
-def save_data(cfg, data, id):
-    data_uploader = DataIngestionService(cfg=cfg)
-    encoded_data = json.dumps(data, indent=2).encode('utf-8')
-    data_uploader.upload_binary(bucket_name=cfg['S3'].data_bucket, 
-                                filename=f'taxi-ridex-{id}.json', 
-                                data=encoded_data)
+#def save_data(cfg, data, id):
+    #data_uploader = DataIngestionService(cfg=cfg)
+    #encoded_data = json.dumps(data, indent=2).encode('utf-8')
+    #data_uploader.upload_binary(bucket_name=cfg['S3'].data_bucket, 
+    #                            filename=f'taxi-ridex-{id}.json', 
+    #                            data=encoded_data)
 
 def read_messages():
-    consumer_config = {"bootstrap.servers": "kafka-bs.fractal-kafka.ovh:9092",
-                       "schema.registry.url": "http://schemaregistry.fractal-kafka.ovh",
+    consumer_config = {"bootstrap.servers": " 141.95.96.119:9094",
+            "schema.registry.url": "http://141.95.96.135:8081",
                        "group.id": "taxirides.avro.consumer.1",
                        "auto.offset.reset": "earliest"}
     cfg = toml.load(Path.cwd().joinpath("config/config.toml"))
     
     consumer = AvroConsumer(consumer_config)
-    consumer.subscribe(["dummy-taxi-rides"])
+    consumer.subscribe(["my-topic-test3"])
     data = []
     id = 0
     while(True):
@@ -31,10 +31,10 @@ def read_messages():
         else:
             if message:
                 data.append(message.value())
-                if len(data) > 100:
-                    id+=1
-                    save_data(cfg=cfg, data=data, id=id)
-                    data.clear()
+                #if len(data) > 100:
+                #    id+=1
+                    #save_data(cfg=cfg, data=data, id=id)
+                    #data.clear()
                 print(f"Successfully poll a record from "
                       f"Kafka topic: {message.topic()}, partition: {message.partition()}, offset: {message.offset()}\n"
                       f"message key: {message.key()} || message value: {message.value()}")
