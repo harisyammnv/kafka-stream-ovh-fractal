@@ -3,166 +3,40 @@
 kubectl create namespace kafka-strimzi
  
 
-
-
 2)Install Strimzi Operator using helm:
 kubectl create -f 'https://strimzi.io/install/latest?namespace=kafka-strimzi' -n kafka
  
 
 3)Apply the kafka yaml file for kafka cluster
 kubectl apply -f kafka.yaml -n kafka-strimzi
-vim kafka.yaml
-below is the yaml file for kafka cluster.
- 
 
-
-4)After applying kafka yaml  file we can see the pods and service have been created .
-kubectl get pods -n kafka
- 
-
-
-kubectl get svc -n kafka-strimzi
- 
-   
+4)Clone the repo for helm charts.   
 git clone https://github.com/confluentinc/cp-helm-charts.git
 
 
+5)Install schema registry for validating the schema ,using helm ,while installing the schema registry
+You have to provide external ip address with port for bootstrap.
 
-
-
-
-
-5)Install schema registry for validating the schema ,using helm ,while installing the schema registry we will provide external port  for bootstrap. You can see in the above fig there is two services for bootstrap on is internal which is by default and another one is external.
-helm install kafka-schema-registry --set kafka.bootstrapServers="PLAINTEXT://my-cluster-kafka-external-bootstrap:9094" cp-helm-charts/charts/cp-schema-registry -n kafka
+helm install kafka-schema-registry --set kafka.bootstrapServers="PLAINTEXT://"External IP ADDRESS of bootstrap:9094" cp-helm-charts/charts/cp-schema-registry -n kafka
  
-
-6)You can see the  services has been created ,after the installation of schema registry .
-kubectl get svc -n kafka-strimzi
-
  
-
-
-
-
-
-
-7)Create loadbalancer for exposing  schema registry externally.  
+6)Create loadbalancer for exposing  schema registry externally.  
 For that create a  yaml file using below command:
-Vim schema.yaml
- 
-
-
-
-
-
-8)Apply this schema yaml file in the kafka-strimzi  namespace.
 kubectl apply -f schema.yaml -n kafka-strimzi
-kubectl get svc -n kafka-strimzi
  
-9)Create ksql server using helm with external ip address of schema registry.
-helm install ksql-server --set cp-schema-registry.url=http:// 141.95.96.144:8081,kafka.bootstrapServers="PLAINTEXT:// 141.95.96.132:9094",ksql.headless=false cp-helm-charts/charts/cp-ksql-server -n kafka-strimzi
+ 
+7)Create ksql server using helm with external ip address of schema registry.
+helm install ksql-server --set cp-schema-registry.url=http://External IP ADDRESS of schema registry:8081,kafka.bootstrapServers="PLAINTEXT://External IP ADDRESS of bootstrap:9094",ksql.headless=false cp-helm-charts/charts/cp-ksql-server -n kafka-strimzi
 
 
+8)create another yaml file for exposing Ksql server .
+kubectl apply ksql.yaml -n kafka-strimzi
  
 
-
-10)create another yaml file for exposing schema registry .
-
-Vim ksql.yaml
- 
-11)After merging the above yaml file into the kafka yaml file apply this again to see the changes
-kubectl apply schema.yaml -n kafka-strimzi
-kubectl get svc -n kafka-strimzi
+9)For verification of our external ip address  is working fine , we will run the below command with providing our just created external ip address for Ksql.
+kubectl -n kafka-strimzi run tmp-ksql-cli1 --rm -i --tty --image confluentinc/cp-ksql-cli:5.2.1 http://External IP ADDRESS of ksql:8088
  
 
 
-
-
-
-12)For verification of our external ip address  is working fine , we will run the below command with providing our just created external ip address for Ksql.
-kubectl -n kafka-strimzi run tmp-ksql-cli1 --rm -i --tty --image confluentinc/cp-ksql-cli:5.2.1 http://141.95.96.134:8088
- 
-
-
-
-12)use simple consumer and producer 
-vim simpler_producer.py
- 
-python3 simpler_producer.py
- 
-
-vim simpler_consumer.py
- 
-python3 simpler_consumer.py
-
- 
-
-13)vim complex_producer.py
- 
-
-
-
-
-
-
-
-
-python3 complex_producer.py
- 
-vim complex_consumer.py
- 
-
-
-
-python3  complex_consumer.py
- 
-
-
-
-14) modify mqtt producer ,mqtt consumer, kafka bridge with your topic name , ip address of the kafka cluster and run it .
- 
-vim mqtt_producer.py
- 
-
-
-
-
-python3 mqtt_producer.py
- 
-
-vim kafka_bridge.py
- 
-python3 kafka_bridge.py
- 
-
-vim mqtt_consumer.py
- 
-
-
-
-
-python3 mqtt_consumer.py
- 
-
-
-
-Note:- Use the api_version(0,10,1)  inside the kafka consumer function.
-
-
-Upload all these yaml and python files on  the Github :
-
-git remote add origin https://github.com/harisyammnv/kafka-stream-ovh-fractal/tree/feature/strimzi/kafka-strimzi
-git remote -v
-
-git status
-git  branch
-git pull
-git checkout feature/strimzi
-git status
-git add .
-git config --global user.email snehasuman541@gmail.com
-git config --global user.name "Sneha123-star"
-git commit -m "first commit"
-git push origin feature/strimzi
 
 
