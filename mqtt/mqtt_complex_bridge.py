@@ -11,10 +11,10 @@ import csv
 from time import sleep
 
 # The Topic Name
-TOPIC = "my-topic-test1"
+TOPIC = "my-topic-test3"
 
 # The address of Kafka server
-KAFKA_HOST = "141.95.96.147:9094"
+KAFKA_HOST = "141.95.96.27:9094"
 
 # Mqtt Address
 MQTT_HOST = "localhost"
@@ -31,8 +31,8 @@ def load_avro_schema_from_file():
 key_schema, value_schema = load_avro_schema_from_file()
 
 producer_config = {
-             "bootstrap.servers": "141.95.96.147:9094",
-             "schema.registry.url": "http://141.95.96.148:8081",
+             "bootstrap.servers": "141.95.96.144:9094",
+             "schema.registry.url": "http://141.95.96.37:8081",
          "acks": "1"
      }
 

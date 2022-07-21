@@ -8,7 +8,7 @@ import time
 TOPIC = "my-topic-test3"
 
 # The address of Kafka server
-KAFKA_HOST = "141.95.96.22:9094"
+KAFKA_HOST = "141.95.96.27:9094"
 
 # Mqtt Address
 MQTT_HOST = "localhost"

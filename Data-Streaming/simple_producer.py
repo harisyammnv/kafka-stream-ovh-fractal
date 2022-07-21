@@ -6,8 +6,8 @@ import time
 from json import dumps
 import random
 
-KAFKA_TOPIC_NAME_CONS = "my-topic-test1"
-KAFKA_BOOTSTRAP_SERVER_CONS = "141.95.96.119:9094" # kafka-bs.fractal-kafka.ovh:9092
+KAFKA_TOPIC_NAME_CONS = "my-topic-test3"
+KAFKA_BOOTSTRAP_SERVER_CONS = "141.95.96.144:9094" # kafka-bs.fractal-kafka.ovh:9092
 
 if __name__ == "__main__":
     print("Simple Kafka Producer Application Started ...!!!")
