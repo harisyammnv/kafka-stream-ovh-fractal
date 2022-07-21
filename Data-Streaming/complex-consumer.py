@@ -13,14 +13,14 @@ from upload_service import DataIngestionService
     #                            data=encoded_data)
 
 def read_messages():
-    consumer_config = {"bootstrap.servers": " 141.95.96.119:9094",
-            "schema.registry.url": "http://141.95.96.135:8081",
+    consumer_config = {"bootstrap.servers": " 141.95.96.147:9094",
+            "schema.registry.url": "http://141.95.96.148:8081",
                        "group.id": "taxirides.avro.consumer.1",
                        "auto.offset.reset": "earliest"}
     cfg = toml.load(Path.cwd().joinpath("config/config.toml"))
     
     consumer = AvroConsumer(consumer_config)
-    consumer.subscribe(["my-topic-test3"])
+    consumer.subscribe(["my-topic-test1"])
     data = []
     id = 0
     while(True):
