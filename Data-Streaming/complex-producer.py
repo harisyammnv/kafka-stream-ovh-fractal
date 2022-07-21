@@ -17,8 +17,8 @@ def send_record():
     key_schema, value_schema = load_avro_schema_from_file()
 
     producer_config = {
-            "bootstrap.servers": "141.95.96.119:9094",
-            "schema.registry.url": "http://141.95.96.135:8081",
+            "bootstrap.servers": "141.95.96.144:9094",
+            "schema.registry.url": "http://141.95.37.135:8081",
         "acks": "1"
     }
 
@@ -35,7 +35,7 @@ def send_record():
                  "payment_type": int(row[9]), "total_amount": float(row[16])}
 
         try:
-            producer.produce(topic='confluent-ksql-ksql-server-command-topic---3559129b2588c53315cf565410e81d7d4a59fba7', key=key, value=value)
+            producer.produce(topic='my-topic-test3', key=key, value=value)
         except Exception as e:
             print(f"Exception while producing record value - {value}: {e}")
         else:
