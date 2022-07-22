@@ -3,7 +3,7 @@ from confluent_kafka.avro import AvroConsumer
 import json
 import toml
 from pathlib import Path
-from upload_service import DataIngestionService
+#from upload_service import DataIngestionService
 
 
 
