@@ -18,7 +18,11 @@ def send_record():
 
     producer_config = {
             "bootstrap.servers": "kafka-bs.fractal-kafka.ovh:9094",
+<<<<<<< HEAD
             "schema.registry.url": "http://schemaregistry.fractal-kafka.ovh:8081",
+=======
+            "schema.registry.url": "http://schemaregistry.fractal-kafka.ovh", # :8081
+>>>>>>> af637fad9a76771bebe19f0a96ffa1270f01bdec
         "acks": "1"
     }
 
