@@ -4,7 +4,7 @@ from kafka import KafkaConsumer
 
 
 # Address of the Kafka
-HOST = "141.95.96.22:9094"
+HOST = "141.95.96.27:9094"
 
 
 

@@ -40,3 +40,4 @@ kubectl -n kafka-strimzi run tmp-ksql-cli1 --rm -i --tty --image confluentinc/cp
 
 
 
+
