@@ -17,8 +17,8 @@ def send_record():
     key_schema, value_schema = load_avro_schema_from_file()
 
     producer_config = {
-            "bootstrap.servers": "141.95.96.144:9094",
-            "schema.registry.url": "http://141.95.37.135:8081",
+            "bootstrap.servers": "kafka-bs.fractal-kafka.ovh:9094",
+            "schema.registry.url": "http://schemaregistry.fractal-kafka.ovh", # :8081
         "acks": "1"
     }
 

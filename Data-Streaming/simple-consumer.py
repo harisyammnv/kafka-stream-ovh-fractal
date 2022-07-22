@@ -8,7 +8,7 @@ import random
 
 
 KAFKA_TOPIC_NAME_CONS= "my-topic-test3"
-KAFKA_BOOTSTRAP_SERVER_CONS="141.95.96.144:9094"
+KAFKA_BOOTSTRAP_SERVER_CONS="kafka-bs.fractal-kafka.ovh:9094"
 message= None
 if __name__ == "__main__":
   print("Simple Kafka Consumer Application Started ...!!!")
