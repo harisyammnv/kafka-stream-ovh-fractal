@@ -67,8 +67,8 @@
       "name": "Curvature (1/m)",
       "type": "string"
     },
-    { "name":"",
-     "type":""
+    { "name":"U",
+     "type":"string"
     },
      {
       "name": "Number of requests",
