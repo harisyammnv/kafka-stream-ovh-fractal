@@ -5,23 +5,23 @@
   "fields": [
     {
       "name": "BaseTime(s)",
-      "type": "float"
+      "type": "string"
     },
     {
       "name": "BaseSpeed (km/h)",
-      "type": "float"
+      "type": "string"
     },
     {
       "name": "TrafficSpeed (km/h)",
-      "type": "float"
+      "type": "string"
     },
     {
       "name": "TrafficTime(s)",
-      "type": "float"
+      "type": "string"
     },
     {
       "name": "Temperature (°C)",
-      "type": "float"
+      "type": "string"
     }
    
          
