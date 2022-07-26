@@ -5,7 +5,12 @@
   "fields": [
     {
       "name": "BaseTime(s)",
-      "type": "float"
+      "type": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 4,
+        "scale": 2
+      }    
     }
   ]
 }
