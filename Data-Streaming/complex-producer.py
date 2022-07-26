@@ -7,7 +7,7 @@ from time import sleep
 
 
 def load_avro_schema_from_file():
-    key_schema = avro.load("schemas/taxi_ride_key.avsc")
+    key_schema = avro.load("/home/snehasuman/kafka-stream-ovh-fractal/Data-Streaming/schemas/vehicle_ride_key.avsc")
     value_schema = avro.load("schemas/taxi_ride_value.avsc")
 
     return key_schema, value_schema

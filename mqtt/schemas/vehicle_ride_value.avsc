@@ -1,0 +1,29 @@
+{
+  "namespace": "drive.cycle.outside",
+  "type": "record",
+  "name": "TaxiRide",
+  "fields": [
+    {
+      "name": "BaseTime(s)",
+      "type": "string"
+    },
+    {
+      "name": "Latitude",
+      "type": "string"
+    },
+    {
+      "name": "Longitude",
+      "type": "string"
+    },
+    {
+      "name": "Distance (m)",
+      "type": "string"
+    },
+    {
+      "name": "Elevation (m)",
+      "type": "string"
+    }
+    
+     
+  ]
+}

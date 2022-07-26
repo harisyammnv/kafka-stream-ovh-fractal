@@ -1,0 +1,11 @@
+{
+  "namespace": "drive.cycle.outside",
+  "type": "record",
+  "name": "TaxiRideKey",
+  "fields": [
+    {
+      "name": "BaseTime(s)",
+      "type": "string"
+    }
+  ]
+}
