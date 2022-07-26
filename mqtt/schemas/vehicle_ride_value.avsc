@@ -5,25 +5,49 @@
   "fields": [
     {
       "name": "BaseTime(s)",
-      "type": "string"
+      "type": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 4,
+        "scale": 2
+      }
     },
     {
       "name": "Latitude",
-      "type": "string"
+      "type": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 4,
+        "scale": 2
+      }
     },
     {
       "name": "Longitude",
-      "type": "string"
+      "type": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 4,
+        "scale": 2
+      }
     },
     {
       "name": "Distance (m)",
-      "type": "string"
+      "type": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 4,
+        "scale": 2
+      }
     },
     {
       "name": "Elevation (m)",
-      "type": "string"
+      "type": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 4,
+        "scale": 2
+      }
     }
     
-     
   ]
 }
