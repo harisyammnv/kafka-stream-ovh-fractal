@@ -1,15 +1,14 @@
 {
   "namespace": "drive.cycle.outside",
   "type": "record",
-  "name": "TaxiRideKey",
+  "name": "TaxiRide",
   "fields": [
+    
     {
-      "name": "BaseTime(s)",
-      "type": {"type": "bytes",
-        "logicalType": "decimal",
-        "precision": 4,
-        "scale": 2}
-      
+      "name": "BaseTime",
+      "type": "float",
+      " Version" : 1
     }
+    
   ]
 }

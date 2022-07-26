@@ -3,51 +3,36 @@
   "type": "record",
   "name": "TaxiRide",
   "fields": [
+    
+    
     {
-      "name": "BaseTime(s)",
-      "type": {
-        "type": "bytes",
-        "logicalType": "decimal",
-        "precision": 4,
-        "scale": 2
-      }
+      "name": "BaseTime",
+      "type": "string",
+      " Version" : 1
+    
     },
     {
       "name": "Latitude",
-      "type": {
-        "type": "bytes",
-        "logicalType": "decimal",
-        "precision": 4,
-        "scale": 2
-      }
+      "type": "string",
+      " Version" : 1
     },
     {
       "name": "Longitude",
-      "type": {
-        "type": "bytes",
-        "logicalType": "decimal",
-        "precision": 4,
-        "scale": 2
-      }
+      "type": "string",
+      " Version" : 1
     },
     {
-      "name": "Distance (m)",
-      "type": {
-        "type": "bytes",
-        "logicalType": "decimal",
-        "precision": 4,
-        "scale": 2
-      }
+      "name": "Distance",
+      "type": "string",
+      " Version" : 1
     },
     {
-      "name": "Elevation (m)",
-      "type": {
-        "type": "bytes",
-        "logicalType": "decimal",
-        "precision": 4,
-        "scale": 2
-      }
+      "name": "Elevation",
+      "type": "string",
+      " Version" : 1
     }
+
+
     
   ]
 }

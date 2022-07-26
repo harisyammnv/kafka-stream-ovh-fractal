@@ -10,7 +10,7 @@ import csv
 from time import sleep
 
 # The Topic Name
-TOPIC = "my-topic-test3"
+TOPIC = "my-topic-test2"
 
 # The address of Kafka server
 #KAFKA_HOST = "141.95.96.27:9094"
@@ -42,13 +42,13 @@ mqtt_client.connect(MQTT_HOST)
 
 def on_message(client, userdata, message):
     i=0
-    key={"Latitude": str(i)}
+    key={"BaseTime": float(i)}
     i=i+1
     msg_payload = message.payload
     msg_payload = msg_payload.decode()
     print("Received MQTT message: ", msg_payload)
     producer.produce(topic=TOPIC, key=key ,value=loads(msg_payload))
-    
+
     print("Send the message: " + msg_payload +f" to Kafka with topic {TOPIC}!")
     producer.flush()
 

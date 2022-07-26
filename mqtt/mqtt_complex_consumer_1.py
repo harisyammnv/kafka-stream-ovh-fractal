@@ -3,7 +3,7 @@ from confluent_kafka.avro import AvroConsumer
 import json
 import toml
 from pathlib import Path
-from upload_service import DataIngestionService
+#from upload_service import DataIngestionService
 
 
 
@@ -15,7 +15,7 @@ def read_messages():
     cfg = toml.load(Path.cwd().joinpath("config/config.toml"))
     
     consumer = AvroConsumer(consumer_config)
-    consumer.subscribe(["my-topic-test3"])
+    consumer.subscribe(["my-topic-test2"])
     data = []
     id = 0
     while(True):
