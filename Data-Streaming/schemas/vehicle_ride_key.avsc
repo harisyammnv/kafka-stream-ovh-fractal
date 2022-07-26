@@ -1,5 +1,5 @@
 {
-  "namespace": "com.datatalksclub.taxi",
+  "namespace": "drive.cycle.outside",
   "type": "record",
   "name": "TaxiRideKey",
   "fields": [
