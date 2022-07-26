@@ -5,7 +5,7 @@
   "fields": [
     {
       "name": "BaseTime(s)",
-      "type": "float"
+      "type": "string"
     }
   ]
 }
