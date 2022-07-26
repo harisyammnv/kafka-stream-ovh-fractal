@@ -4,26 +4,69 @@
   "name": "TaxiRide",
   "fields": [
     {
-      "name": "BaseTime(s)",
-      "type": "string"
+      "name": "SpeedLimit (km/h)",
+      "type": "float"
     },
     {
-      "name": "BaseSpeed (km/h)",
-      "type": "string"
+      "name": "Pressure (bar)",
+      "type": "float"
     },
     {
-      "name": "TrafficSpeed (km/h)",
-      "type": "string"
+      "name": "Humidity (%)",
+      "type": "float"
     },
     {
-      "name": "TrafficTime(s)",
-      "type": "string"
+      "name": "WindSpeed (km/h)",
+      "type": "float"
     },
     {
-      "name": "Temperature (°C)",
-      "type": "string"
+      "name": "WindDirection (°)",
+      "type": "float"
+    },
+    {
+      "name": "Vehicle direction (°)",
+      "type": "float"
+    },
+    {
+      "name": "WindSpeed Projection (km/h)",
+      "type": "float"
+    },
+    {
+      "name": "SolarIrradiance (W/m2)",
+      "type": "int"
+    },
+    {
+      "name": "Distance to nearest charge station (m)",
+      "type": "float"
+    },
+     {
+      "name": "Power connector (kW)",
+      "type": "float"
+    },
+     {
+      "name": "Latitude",
+      "type": "float"
+    },
+     {
+      "name": "Longitude",
+      "type": "float"
+    },
+     {
+      "name": "Distance (m)",
+      "type": "float"
+    },
+     {
+      "name": "Elevation (m)",
+      "type": "float"
+    },
+     {
+      "name": "RoadSlope (%)",
+      "type": "float"
+    },
+     {
+      "name": "Curvature (1/m)",
+      "type": "float"
     }
-   
          
   ]
 }
