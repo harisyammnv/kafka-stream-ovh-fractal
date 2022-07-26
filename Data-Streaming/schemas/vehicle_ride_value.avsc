@@ -4,78 +4,23 @@
   "name": "TaxiRide",
   "fields": [
     {
-      "name": "SpeedLimit (km/h)",
-      "type": "string"
-    },
-    {
-      "name": "Pressure (bar)",
-      "type": "string"
-    },
-    {
-      "name": "Humidity (%)",
-      "type": "string"
-    },
-    {
-      "name": "WindSpeed (km/h)",
-      "type": "string"
-    },
-    {
-      "name": "WindDirection (°)",
-      "type": "string"
-    },
-    {
-      "name": "Vehicle direction (°)",
-      "type": "string"
-    },
-    {
-      "name": "WindSpeed Projection (km/h)",
-      "type": "string"
-    },
-    {
-      "name": "SolarIrradiance (W/m2)",
-      "type": "string"
-    },
-    {
-      "name": "Distance to nearest charge station (m)",
-      "type": "string"
-    },
-     {
-      "name": "Power connector (kW)",
-      "type": "string"
-    },
-     {
       "name": "Latitude",
       "type": "string"
     },
-     {
+    {
       "name": "Longitude",
       "type": "string"
     },
-     {
+    {
       "name": "Distance (m)",
       "type": "string"
     },
-     {
+    {
       "name": "Elevation (m)",
       "type": "string"
     },
-     {
+    {
       "name": "RoadSlope (%)",
-      "type": "string"
-    },
-     {
-      "name": "Curvature (1/m)",
-      "type": "string"
-    },
-    { "name":"U",
-     "type":"string"
-    },
-     {
-      "name": "Number of requests",
-      "type": "string"
-    },
-     {
-      "name": "138",
       "type": "string"
     }
      
