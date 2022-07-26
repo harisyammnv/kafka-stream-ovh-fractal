@@ -5,68 +5,79 @@
   "fields": [
     {
       "name": "SpeedLimit (km/h)",
-      "type": "float"
+      "type": "string"
     },
     {
       "name": "Pressure (bar)",
-      "type": "float"
+      "type": "string"
     },
     {
       "name": "Humidity (%)",
-      "type": "float"
+      "type": "string"
     },
     {
       "name": "WindSpeed (km/h)",
-      "type": "float"
+      "type": "string"
     },
     {
       "name": "WindDirection (°)",
-      "type": "float"
+      "type": "string"
     },
     {
       "name": "Vehicle direction (°)",
-      "type": "float"
+      "type": "string"
     },
     {
       "name": "WindSpeed Projection (km/h)",
-      "type": "float"
+      "type": "string"
     },
     {
       "name": "SolarIrradiance (W/m2)",
-      "type": "int"
+      "type": "string"
     },
     {
       "name": "Distance to nearest charge station (m)",
-      "type": "float"
+      "type": "string"
     },
      {
       "name": "Power connector (kW)",
-      "type": "float"
+      "type": "string"
     },
      {
       "name": "Latitude",
-      "type": "float"
+      "type": "string"
     },
      {
       "name": "Longitude",
-      "type": "float"
+      "type": "string"
     },
      {
       "name": "Distance (m)",
-      "type": "float"
+      "type": "string"
     },
      {
       "name": "Elevation (m)",
-      "type": "float"
+      "type": "string"
     },
      {
       "name": "RoadSlope (%)",
-      "type": "float"
+      "type": "string"
     },
      {
       "name": "Curvature (1/m)",
-      "type": "float"
+      "type": "string"
+    },
+    { "name":"",
+     "type":""
+    },
+     {
+      "name": "Number of requests",
+      "type": "string"
+    },
+     {
+      "name": "138",
+      "type": "string"
     }
-         
+     
   ]
 }
