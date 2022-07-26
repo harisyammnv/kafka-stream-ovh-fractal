@@ -4,25 +4,25 @@
   "name": "TaxiRide",
   "fields": [
     {
+      "name": "BaseTime(s)",
+      "type": "float"
+    },
+    {
       "name": "Latitude",
-      "type": "string"
+      "type": "float"
     },
     {
       "name": "Longitude",
-      "type": "string"
+      "type": "float"
     },
     {
       "name": "Distance (m)",
-      "type": "string"
+      "type": "float"
     },
     {
       "name": "Elevation (m)",
-      "type": "string"
-    },
-    {
-      "name": "RoadSlope (%)",
-      "type": "string"
+      "type": "float"
     }
-     
+    
   ]
 }
