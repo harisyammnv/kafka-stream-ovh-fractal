@@ -1,7 +1,7 @@
 apiVersion: kafka.strimzi.io/v1beta1
 kind: KafkaTopic
 metadata:
-  name: my-topic-test1
+  name: dummy-topic-test1
   labels:
     strimzi.io/cluster: fractal-kafka-cluster
 spec:
@@ -10,7 +10,7 @@ spec:
 apiVersion: kafka.strimzi.io/v1beta1
 kind: KafkaTopic
 metadata:
-  name: my-topic-test2
+  name: dummy-topic-test2
   labels:
     strimzi.io/cluster: fractal-kafka-cluster
 spec:
@@ -21,9 +21,51 @@ spec:
 apiVersion: kafka.strimzi.io/v1beta1
 kind: KafkaTopic
 metadata:
-  name: my-topic-test3
+  name: dummy-topic-test3
   labels:
     strimzi.io/cluster: fractal-kafka-cluster
 spec:
   replicas: 1
   partitions: 1  
+---
+apiVersion: kafka.strimzi.io/v1beta1 
+kind: KafkaTopic 
+metadata: 
+name: dummy-topic-test4 
+labels: 
+strimzi.io/cluster: fractal-kafka-cluster 
+spec: 
+replicas: 1 
+partitions: 1 
+
+--- 
+apiVersion: kafka.strimzi.io/v1beta1 
+kind: KafkaTopic 
+metadata: 
+name: dummy-topic-test5 
+labels: 
+strimzi.io/cluster: fractal-kafka-cluster 
+spec: 
+replicas: 1 
+partitions: 1 
+--- 
+
+apiVersion: kafka.strimzi.io/v1beta1 
+kind: KafkaTopic 
+metadata: 
+name: drive-cycle-uc2-onward 
+labels: 
+strimzi.io/cluster: fractal-kafka-cluster 
+spec: 
+replicas: 2 
+partitions: 3 
+---
+apiVersion: kafka.strimzi.io/v1beta1 
+kind: KafkaTopic 
+metadata: 
+name: drive-cycle-uc2-return 
+labels: 
+strimzi.io/cluster: fractal-kafka-cluster 
+spec: 
+replicas: 2 
+partitions: 3 
