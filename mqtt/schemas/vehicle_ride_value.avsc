@@ -6,33 +6,54 @@
     
     
     {
-      "name": "BaseTime",
+      "name": "Time",
       "type": "float",
       " Version" : 1
     
     },
     {
-      "name": "Latitude",
+      "name": "T_Amb",
       "type": "float",
       " Version" : 1
     },
     {
-      "name": "Longitude",
+      "name": "Phi_Amb",
       "type": "float",
       " Version" : 1
     },
     {
-      "name": "Distance",
+      "name": "Road_Grad",
       "type": "float",
       " Version" : 1
     },
     {
-      "name": "Elevation",
+      "name": "Veh_Spd",
       "type": "float",
       " Version" : 1
     }
-
-
-    
+    ,
+    {
+      "name": "Wind_Spd_Proj",
+      "type": "float",
+      " Version" : 1
+    }
+    ,
+    {
+      "name": "Solar_Rad",
+      "type": "float",
+      " Version" : 1
+    }
+    ,
+    {
+      "name": "DistanceChargeStation",
+      "type": "float",
+      " Version" : 1
+    },
+    {
+      "name": "PowerConnector",
+      "type": "float",
+      " Version" : 1
+    }
+        
   ]
 }
