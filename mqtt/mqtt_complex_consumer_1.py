@@ -15,7 +15,7 @@ def read_messages():
     cfg = toml.load(Path.cwd().joinpath("config/config.toml"))
     
     consumer = AvroConsumer(consumer_config)
-    consumer.subscribe(["my-topic-test2"])
+    consumer.subscribe(["my-topic-test1"])
     data = []
     id = 0
     while(True):

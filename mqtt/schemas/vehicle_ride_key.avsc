@@ -1,14 +1,7 @@
+
 {
-  "namespace": "drive.cycle.outside",
-  "type": "record",
-  "name": "TaxiRide",
-  "fields": [
-    
-    {
-      "name": "Time",
-      "type": "float",
-      " Version" : 1
-    }
-    
-  ]
-}
+	"namespace": "drive.cycle.outside",
+	"type": "record",
+	"name": "TaxiRide",
+	"fields": [
+		{"name": "Time", "type": ["float", "null"]}]}

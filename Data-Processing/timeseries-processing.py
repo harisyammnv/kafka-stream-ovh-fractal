@@ -20,9 +20,13 @@ if __name__ == "__main__":
         .getOrCreate()
         
     s3_folder_path = "s3a://test-timeseries-data/"
+    print(s3_folder_path)
     df = spark.read.csv(s3_folder_path)
-    # to calculate distance = speed [km/hr] * (time[s]/3600)
-    df.withColumn("distance_travelled", col("Speed") * (col("time")/3600))
+    df.show()
     
-    df.write.csv("s3a://test-timeseries-data/csv/final-drive-cycle.csv")
+
+    # to calculate distance = speed [km/hr] * (time[s]/3600)
+    #df.withColumn("distance_travelled", col("Speed") * (col("time")/3600))
+    
+    df.write.csv("s3a://test-timeseries-data/csv/final-drive-cycle1.csv")
     

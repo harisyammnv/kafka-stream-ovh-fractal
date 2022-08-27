@@ -1,7 +1,13 @@
 name: SparkEnv
 dependencies:
-  - python=3.9
+  - python=3.8
   - numpy=1.21.*
   - pip:
-    - Flask
     - toml
+    - pyspark
+    - boto3
+    - kafka-python
+    - confluent_kafka
+    - avro-python3
+    - pandas
+    

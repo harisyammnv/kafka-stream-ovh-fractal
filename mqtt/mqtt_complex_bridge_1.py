@@ -10,7 +10,7 @@ import csv
 from time import sleep
 
 # The Topic Name
-TOPIC = "my-topic-test2"
+TOPIC = "my-topic-test1"
 
 # The address of Kafka server
 #KAFKA_HOST = "141.95.96.27:9094"
@@ -52,7 +52,7 @@ def on_message(client, userdata, message):
     print("Send the message: " + msg_payload +f" to Kafka with topic {TOPIC}!")
     producer.flush()
 
-    sleep(1)
+    sleep(5)
 mqtt_client.loop_start()
 mqtt_client.subscribe("local_topic")
 mqtt_client.on_message = on_message

@@ -34,5 +34,5 @@ for row in csvreader:
     
     mqtt_client.publish("local_topic",dumps(value))
     print("Send a message to MQTT: " ,value,  " to kafka")
-    time.sleep(1)
+    time.sleep(5)
 

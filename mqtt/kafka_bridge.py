@@ -1,14 +1,12 @@
 from kafka import KafkaProducer
-
 import paho.mqtt.client as mqtt
-
 import time
 
 # The Topic Name
-TOPIC = "my-topic-test3"
+TOPIC = "my-topic-test1"
 
 # The address of Kafka server
-KAFKA_HOST = "141.95.96.27:9094"
+KAFKA_HOST = "152.228.251.147:9094"
 
 # Mqtt Address
 MQTT_HOST = "localhost"
@@ -20,7 +18,7 @@ mqtt_client.connect(MQTT_HOST)
 
 
 # Kafka Settings
-kafka_producer = KafkaProducer(TOPIC,bootstrap_servers=KAFKA_HOST,api_version=(0,10,1))
+kafka_producer = KafkaProducer(TOPIC,bootstrap_servers=KAFKA_HOST)
 
 
 def on_message(client, userdata, message):

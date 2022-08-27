@@ -1,0 +1,114 @@
+
+from confluent_kafka import Producer
+from avro import schema
+import avro.io
+import io
+import csv
+import random
+from pyspark.sql import SparkSession
+from pyspark.sql.avro.functions import from_avro
+from pyspark.sql.functions import col
+import io
+import toml
+import time
+import os
+import json
+
+kafka_topic_name = "my-topic-test1"
+kafka_bootstrap_servers = 'kafka-bs.fractal-kafka.ovh:9094'
+#os.environ['PYSPARK_SUBMIT_ARGS'] = "--packages=org.apache.spark:spark-sql-kafka-0-10_2.12:3.3.0,org.apache.spark:spark-avro_2.12:3.3.0,com.amazonaws:aws-java-sdk:1.12.275,org.apache.hadoop:hadoop-aws:3.3.0 pyspark-shell"
+if __name__ == "__main__":
+    config = toml.load("config.toml")
+    print("Welcome to DataMaking !!!")
+    print("Stream Data Processing Application Started ...")
+    print(time.strftime("%Y-%m-%d %H:%M:%S"))
+    kafka_config_obj = {'bootstrap.servers': kafka_bootstrap_servers}
+    kafka_producer_obj = Producer(**kafka_config_obj)
+    spark = SparkSession \
+        .builder \
+        .appName("PySpark Structured Streaming") \
+        .config("spark.hadoop.fs.s3a.access.key", config["S3"].get('s3_access_key')) \
+        .config("spark.hadoop.fs.s3a.secret.key", config["S3"].get('s3_secret_key')) \
+        .config("spark.hadoop.fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")\
+        .config("spark.hadoop.fs.s3a.path.style.access", "true")\
+        .config("spark.hadoop.fs.s3a.endpoint", "s3.gra.cloud.ovh.net")\
+        .getOrCreate()
+
+    spark.sparkContext.setLogLevel("ERROR")
+    file = open('220129_Smart TMS_Cycles data_V4_2_processed.csv')
+    csvreader = csv.reader(file)
+    csvreader=list(csvreader)
+    avro_schema_path = "new.avsc" 
+    avro_orders_schema = schema.parse(open(avro_schema_path).read())
+    
+    message_list = []
+    message = None
+    
+    for i in range(1,20,1):
+        
+        message = {}        
+        print("Preparing message: " + str(i))
+        message["Time"] =str(csvreader[i+1][7])
+        message["T_Amb"] = str(csvreader[i+1][0])
+        message["Phi_Amb"] = str(csvreader[i+1][1])
+        message["Road_Grad"] =str(csvreader[i+1][2])
+        message["Veh_Spd"] = str(csvreader[i+1][3])
+        message["Wind_Spd_Proj"] = str(csvreader[i+1][4])
+        message["Solar_Rad"] =str(csvreader[i+1][5])
+        message["DistanceChargeStation"] = str(csvreader[i+1][6])
+        message["PowerConnector"] = str(csvreader[i+1][8])
+        #print("Message: ", message)
+        message_writer = avro.io.DatumWriter(avro_orders_schema)
+        message_bytes_writer = io.BytesIO()
+        message_encoder = avro.io.BinaryEncoder(message_bytes_writer)
+        message_writer.write(message,message_encoder)
+        message_raw_bytes = message_bytes_writer.getvalue()
+        x=kafka_producer_obj.produce(kafka_topic_name, message_raw_bytes)
+        time.sleep(1)
+        print(x)
+        
+        parsed = spark.read(x)
+        parsed.saveAsJsonFile("s3a://test-timeseries-data/result.json")
+
+        # orders_df = spark \
+        # .readStream \
+        # .format("kafka") \
+        # .option("kafka.bootstrap.servers", kafka_bootstrap_servers) \
+        # .option("subscribe", kafka_topic_name) \
+        # .option("startingOffsets", "latest") \
+        # .load()
+    # print("Printing Schema of orders_df: ")
+    # orders_df.printSchema()
+    # orders_schema_avro = open("new.avsc" , mode='r').read()
+    # orders_df1 = orders_df.select("value", "timestamp") 
+    # orders_schema_avro = open("new.avsc" , mode='r').read()
+    # orders_df2 = orders_df1\
+    #     .select(from_avro(col("value"), orders_schema_avro)\
+    #     .alias("orders"), "timestamp")
+    # orders_df3 = orders_df2.select("orders.*", "timestamp")
+    # orders_df3.printSchema()
+    # orders_agg_write_stream = orders_df3 \
+    #     .writeStream \
+    #     .trigger(processingTime='5 seconds') \
+    #     .format("json") \
+    #     .outputMode("append") \
+    #     .option("checkpointLocation", "s3a://test-timeseries-data/output") \
+    #     .option("path","s3a://test-timeseries-data/output") \
+    #     .start()
+    # print("Stream Data Processing Application Completed.")
+         
+    kafka_producer_obj.flush() 
+    spark.stop()
+    # Construct a streaming DataFrame that reads from test-topic
+    
+
+
+    # Define a schema for the orders data
+    # order_id,order_product_name,order_card_type,order_amount,order_datetime,order_country_name,order_city_name,order_ecommerce_website_name
+   
+    # 8,Wrist Band,MasterCard,137.13,2020-10-21 18:37:02,United Kingdom,London,www.datamaking.com
+
+    # Write final result into console for debugging purpose
+    
+    
+    
