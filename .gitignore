@@ -2,3 +2,4 @@
 .env
 config.toml
 consumed_data/
+Spark_streaming/pyspark_structured_streaming
