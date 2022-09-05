@@ -8,11 +8,11 @@ from pathlib import Path
 
 
 def read_messages():
-    consumer_config = {"bootstrap.servers":  "152.228.251.147:9094",
-            "schema.registry.url": "http://152.228.251.146:8081",
+    consumer_config = {"bootstrap.servers":  "kafka-bs.fractal-kafka.ovh:9094",
+            "schema.registry.url": "http://schemaregistry.fractal-kafka.ovh:8081",
                        "group.id": "taxirides.avro.consumer.1",
                        "auto.offset.reset": "earliest"}
-    cfg = toml.load(Path.cwd().joinpath("config/config.toml"))
+    #cfg = toml.load(Path.cwd().joinpath("config/config.toml"))
     
     consumer = AvroConsumer(consumer_config)
     consumer.subscribe(["my-topic-test3"])

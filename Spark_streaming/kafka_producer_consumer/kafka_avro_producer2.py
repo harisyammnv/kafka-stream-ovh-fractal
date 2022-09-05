@@ -62,4 +62,4 @@ if __name__ == "__main__":
         kafka_producer_obj.produce(KAFKA_TOPIC_NAME_CONS, message_raw_bytes)
         sleep(1)  
        
-    kafka_producer_obj.flush()
+    #kafka_producer_obj.flush()

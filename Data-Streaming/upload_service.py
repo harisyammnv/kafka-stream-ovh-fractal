@@ -3,6 +3,8 @@ import io
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+import boto3 
+
 
 class DataIngestionServiceException(Exception):
     pass
@@ -12,13 +14,13 @@ class DataIngestionService:
         print("Initializing data ingestion service")
         load_dotenv()
         session = boto3.Session(
-            aws_access_key_id=os.environ["aws_access_key_id"],
-            aws_secret_access_key=os.environ["aws_secret_access_key"]
+            aws_access_key_id="",
+            aws_secret_access_key=""
         )
         self.s3_client = session.client(
             's3',
-            endpoint_url=f"https://s3.{cfg['S3'].s3_region}.cloud.ovh.net/",
-            region_name=cfg.s3_region
+            endpoint_url="https://s3.gra.cloud.ovh.net",
+            region_name="gra"
         )
         self.cfg = cfg
     def _check_bucket(self, bucket_name: str, create_on_check: bool = False) -> bool:
@@ -26,14 +28,14 @@ class DataIngestionService:
         if bucket_name in available_bucket_names:
             return True
         if create_on_check:
-            location = {'LocationConstraint': self.cfg.s3_region}
+            location = "gra"
             self.s3_client.create_bucket(
                 Bucket=bucket_name,
                 CreateBucketConfiguration=location
             )
             return True
         return False
-    def upload_binary(self, bucket_name: str, filename: str, data: bytearray, retries: int = 1, rest: int = 5) -> None:
+    def upload_binary(self, bucket_name: str, filename:str, data: bytearray, retries: int = 1, rest: int = 5) -> None:
         self._check_bucket(bucket_name, create_on_check=True)
         print(f"Saving {filename} to bucket {bucket_name}.")
         for _ in range(retries):
@@ -51,7 +53,7 @@ class DataIngestionService:
                 print(f"Saved {filename}({len(data)}) to {bucket_name}.")
                 return
         raise DataIngestionServiceException(f'Could not put json object in the bucket: {bucket_name} because of {exception}')
-    def _get_filename(self, message: ConsumerRecord) -> str:
+    def _get_filename(self, message, ConsumerRecord) -> str:
         name_extension = message.key.decode('UTF-8').rsplit('.', 1)
         if len(name_extension) == 2:
             name, extension = name_extension
