@@ -3,10 +3,7 @@ from confluent_kafka.avro import AvroConsumer
 import json
 import toml
 from pathlib import Path
-#from upload_service import DataIngestionService
-
-
-
+#Defining the schema registry,bootstrep ad topics of kafka for schmema validation.
 def read_messages():
     consumer_config = {"bootstrap.servers": "kafka-bs.fractal-kafka.ovh:9094",
                        "schema.registry.url": "http://schemaregistry.fractal-kafka.ovh:8081",
@@ -18,6 +15,7 @@ def read_messages():
     consumer.subscribe(["my-topic-test1"])
     data = []
     id = 0
+    #consuming the kafka data and uploading it on the ovh cloud.
     while(True):
         try:
             message = consumer.poll(5)

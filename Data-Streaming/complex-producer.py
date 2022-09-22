@@ -1,18 +1,17 @@
-
+'''Summary: In this file the kafka produer producing  on the kafka topic with avro schema files '''  
 from kafka.producer import KafkaProducer
 from confluent_kafka import avro
 from confluent_kafka.avro import AvroProducer
 import csv
 from time import sleep
-
-
+from mqtt_complex_consumer_1 import *
+#loading the schema files for schema validation purpose.
 def load_avro_schema_from_file():
     key_schema = avro.load("schemas/vehicle_ride_key.avsc")
     value_schema = avro.load("schemas/vehicle_ride_value.avsc")
-
     return key_schema, value_schema
 
-
+#This function  is used to validate the avro schema using the above files
 def send_record():
     key_schema, value_schema = load_avro_schema_from_file()
 
@@ -23,11 +22,11 @@ def send_record():
     }
 
     producer = AvroProducer(producer_config, default_key_schema=key_schema, default_value_schema=value_schema)
-
-    file = open('data/220129_Smart TMS_Cycles data_V4_2_processed.csv')
-
-    csvreader = csv.reader(file)
-    header = next(csvreader)
+    #File containing the data that we will process further.
+    file = read_messages.cfg
+    #csvreader = csv.reader(file)
+    header = next(r)
+    
     for row in csvreader:
         #key = {"BaseTime(s)": row[1]}
         value = {"BaseTime": row[1],

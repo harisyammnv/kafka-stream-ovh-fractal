@@ -3,8 +3,6 @@ from datetime import datetime
 import time
 import random
 
-# pip install kafka-python
-
 KAFKA_TOPIC_NAME_CONS = "test-topic"
 KAFKA_BOOTSTRAP_SERVERS_CONS = 'localhost:9092'
 
@@ -27,9 +25,10 @@ if __name__ == "__main__":
                                    "New Delhi,Inida", "Hyderabad,India", "Kolkata,India", "Singapore,Singapore"]
 
     ecommerce_website_name_list = ["www.datamaking.com", "www.amazon.com", "www.flipkart.com", "www.snapdeal.com", "www.ebay.com"]
-
+    
     message_list = []
     message = None
+    #This loop will produce data.
     for i in range(500):
         i = i + 1
         message_fields_value_list = []

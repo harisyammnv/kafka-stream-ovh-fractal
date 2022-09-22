@@ -1,4 +1,4 @@
-
+'''Summary: this is simple kafka produecr taking the data and producig it on the kafka topic.'''
 from kafka import KafkaProducer
 from datetime import datetime
 import time

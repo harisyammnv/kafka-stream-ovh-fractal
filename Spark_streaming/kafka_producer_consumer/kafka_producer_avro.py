@@ -2,20 +2,16 @@ from confluent_kafka import Producer
 from avro import schema
 import avro.io
 import io
-
 from datetime import datetime
 import time
 import random
-
-# pip install avro-python3
-# pip install confluent-kafka
-
+#Defined the kafka topics and bootstrap server. 
 KAFKA_TOPIC_NAME_CONS = "my-topic-test1"
 KAFKA_BOOTSTRAP_SERVERS_CONS = 'kafka-bs.fractal-kafka.ovh:9094'
 
 if __name__ == "__main__":
     print("Kafka Producer Application Started ... ")
-
+    #Producer Setting
     kafka_config_obj = {'bootstrap.servers': KAFKA_BOOTSTRAP_SERVERS_CONS}
     kafka_producer_obj = Producer(**kafka_config_obj)
 
@@ -36,15 +32,15 @@ if __name__ == "__main__":
     # Path to user.avsc avro schema
     avro_schema_path = "orders.avsc"
     avro_orders_schema = schema.parse(open(avro_schema_path).read())
-
+    #Creating list to store messages. 
     message_list = []
     message = None
+    #This loop will produce data with avro.
     for i in range(500):
         i = i + 1
         message = {}
         print("Preparing message: " + str(i))
         event_datetime = datetime.now()
-
         message["order_id"] = i
         message["order_product_name"] = random.choice(product_name_list)
         message["order_card_type"] = random.choice(order_card_type_list)

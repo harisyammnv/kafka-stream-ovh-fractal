@@ -1,30 +1,24 @@
 from pyspark.sql import SparkSession
 from pyspark.sql.avro.functions import from_avro
 from pyspark.sql.functions import col
-import io
-import toml
 import time
 import os
-#Need to define the topics and bootstrep server to access the streaming data from kafka .
+#Need to define the topics and bootstrap server to access the streaming data from kafka .
 kafka_topic_name = "my-topic-test1"
 kafka_bootstrap_servers = 'kafka-bs.fractal-kafka.ovh:9094'
 if __name__ == "__main__":
-    config = toml.load("config.toml")
     print("Welcome to DataMaking !!!")
     print("Stream Data Processing Application Started ...")
     print(time.strftime("%Y-%m-%d %H:%M:%S"))
-    #Creating a spark session with S3 object of ovh cloud 
+    #Creating a spark session
     spark = SparkSession \
         .builder \
-        .appName("PySpark Structured Streaming") \
-        .config("spark.hadoop.fs.s3a.access.key", config["S3"].get('s3_access_key')) \
-        .config("spark.hadoop.fs.s3a.secret.key", config["S3"].get('s3_secret_key')) \
-        .config("spark.hadoop.fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")\
-        .config("spark.hadoop.fs.s3a.path.style.access", "true")\
-        .config("spark.hadoop.fs.s3a.endpoint", "s3.gra.cloud.ovh.net")\
-        .getOrCreate()
-
+        .appName("PySpark Structured Streaming with Kafka and Message Format as JSON") \
+        .master("local[*]") \
+        .getOrCreate() 
     spark.sparkContext.setLogLevel("ERROR")
+    spark.conf.set("mapreduce.fileoutputcommitter.marksuccessfuljobs", "false") 
+    spark.conf.set("parquet.enable.summary-metadata", "false")
     # Construct a streaming DataFrame that reads from test-topic
     orders_df = spark \
         .readStream \
@@ -38,7 +32,7 @@ if __name__ == "__main__":
     orders_df.printSchema()
     # Define a schema for the orders data
     orders_df1 = orders_df.select("value", "timestamp")
-    orders_schema_avro = open('new.avsc', mode='r').read()
+    orders_schema_avro = open('/home/snehasuman/kafka-stream-ovh-fractal/mqtt/schemas/vehicle_ride_value.avsc', mode='r').read()
     orders_df2 = orders_df1\
         .select(from_avro(col("value"), orders_schema_avro)\
         .alias("orders"), "timestamp")
@@ -46,16 +40,17 @@ if __name__ == "__main__":
     orders_df3 = orders_df2.select("orders.*", "timestamp")
     orders_df3.printSchema()
 
-    # Write final result into console for debugging purpose
-    orders_agg_write_stream = orders_df3\
+    # Write final result into console for debugging purpose and saving data on local.
+    orders_agg_write_stream = orders_df3 \
         .writeStream \
         .trigger(processingTime='5 seconds') \
-        .format("console") \
+        .format("parquet")\
         .outputMode("append") \
-        .option("checkpointLocation", "s3a://test-timeseries-data/") \
-        .option("path","s3a://test-timeseries-data/result") \
+        .option("checkpointLocation", "/home/snehasuman/kafka-stream-ovh-fractal/Data-Processing") \
+        .option("path","/home/snehasuman/kafka-stream-ovh-fractal/Data-Processing/result2") \
+        .option("truncate", "false")\
         .start()
     
     orders_agg_write_stream.awaitTermination()
     print("Stream Data Processing Application Completed.")
-    spark.stop()  
+

@@ -10,17 +10,13 @@ KAFKA_HOST = "152.228.251.147:9094"
 
 # Mqtt Address
 MQTT_HOST = "localhost"
-
-
 # MQTT Settings
 mqtt_client = mqtt.Client("BridgeMQTT2Kafka")
 mqtt_client.connect(MQTT_HOST)
 
-
-# Kafka Settings
+#producer Settings
 kafka_producer = KafkaProducer(TOPIC,bootstrap_servers=KAFKA_HOST)
-
-
+#This function will used for producing the data on the kafka topics specify above.
 def on_message(client, userdata, message):
     msg_payload = message.payload
     msg_payload = msg_payload.decode()

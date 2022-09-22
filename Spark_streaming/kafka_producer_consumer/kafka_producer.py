@@ -3,15 +3,13 @@ from datetime import datetime
 import time
 from json import dumps
 import random
-
-# pip install kafka-python
-
+#defined the kafka topics,bootstrap. 
 KAFKA_TOPIC_NAME_CONS = "my-topic-test1"
 KAFKA_BOOTSTRAP_SERVERS_CONS = 'kafka-bs.fractal-kafka.ovh:9094'
 
 if __name__ == "__main__":
     print("Kafka Producer Application Started ... ")
-
+    #producer setting
     kafka_producer_obj = KafkaProducer(bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS_CONS,
                                        value_serializer=lambda x: dumps(x).encode('utf-8'))
 
@@ -28,15 +26,15 @@ if __name__ == "__main__":
                                    "New Delhi,Inida", "Hyderabad,India", "Kolkata,India", "Singapore,Singapore"]
 
     ecommerce_website_name_list = ["www.datamaking.com", "www.amazon.com", "www.flipkart.com", "www.snapdeal.com", "www.ebay.com"]
-
+    
     message_list = []
     message = None
+    #This loop will produce data.
     for i in range(500):
         i = i + 1
         message = {}
         print("Preparing message: " + str(i))
         event_datetime = datetime.now()
-
         message["order_id"] = i
         message["order_product_name"] = random.choice(product_name_list)
         message["order_card_type"] = random.choice(order_card_type_list)
@@ -51,14 +49,11 @@ if __name__ == "__main__":
         message["order_country_name"] = country_name
         message["order_city_name"] = city_name
         message["order_ecommerce_website_name"] = random.choice(ecommerce_website_name_list)
-
         # order_id,order_product_name,order_card_type,order_amount,order_datetime,order_country_name,order_city_name,order_ecommerce_website_name
         # print("Message Type: ", type(message))
         print("Message: ", message)
         #message_list.append(message)
         kafka_producer_obj.send(KAFKA_TOPIC_NAME_CONS, message)
         time.sleep(1)
-
     # print(message_list)
-
     print("Kafka Producer Application Completed. ")

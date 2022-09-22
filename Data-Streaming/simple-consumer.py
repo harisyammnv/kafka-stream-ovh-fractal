@@ -1,4 +1,4 @@
-
+'''Summary: this is simple kafka consumer taking from the kafka topic.'''
 from kafka import KafkaConsumer
 from datetime import datetime
 import time
