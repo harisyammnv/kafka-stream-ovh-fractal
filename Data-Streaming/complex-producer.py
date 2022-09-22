@@ -4,11 +4,14 @@ from confluent_kafka import avro
 from confluent_kafka.avro import AvroProducer
 import csv
 from time import sleep
-from mqtt_complex_consumer_1 import *
+from pathlib import Path
+
+#Specifying path 
+file_path=Path.home().joinpath('kafka-stream-ovh-fractal/mqtt')
 #loading the schema files for schema validation purpose.
-def load_avro_schema_from_file():
-    key_schema = avro.load("schemas/vehicle_ride_key.avsc")
-    value_schema = avro.load("schemas/vehicle_ride_value.avsc")
+def load_avro_schema_from_file():  
+    key_schema = avro.load(str(file_path)+'/'+'schemas/vehicle_ride_key.avsc')
+    value_schema = avro.load(str(file_path)+'/'+'schemas/vehicle_ride_value.avsc')
     return key_schema, value_schema
 
 #This function  is used to validate the avro schema using the above files
@@ -21,19 +24,19 @@ def send_record():
             "acks": "1"
     }
 
-    producer = AvroProducer(producer_config, default_key_schema=key_schema, default_value_schema=value_schema)
+    producer = AvroProducer(producer_config,default_value_schema=value_schema)
     #File containing the data that we will process further.
-    file = read_messages.cfg
-    #csvreader = csv.reader(file)
-    header = next(r)
+    file = open(str(file_path)+'/'+'data/220129_Smart TMS_Cycles data_V4_2_processed.csv')
+    csvreader = csv.reader(file)
+    header = next(csvreader)
     
     for row in csvreader:
         #key = {"BaseTime(s)": row[1]}
-        value = {"BaseTime": row[1],
-              "Latitude": row[1]
-             ,"Longitude": row[1], 
-            "Distance": row[1], 
-            "Elevation": row[1]}
+        value = {"Time": float(row[1]),
+              "Latitude": float(row[1])
+             ,"Longitude": float(row[1]), 
+            "Distance": float(row[1]), 
+            "Elevation": float(row[1])}
 
         try:
             producer.produce(topic='my-topic-test3',  value=value)

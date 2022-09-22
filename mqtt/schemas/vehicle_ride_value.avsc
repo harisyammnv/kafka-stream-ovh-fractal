@@ -12,48 +12,26 @@
     
     },
     {
-      "name": "T_Amb",
+      "name": "Latitude",
       "type": "float",
       " Version" : 1
     },
     {
-      "name": "Phi_Amb",
+      "name": "Longitude",
       "type": "float",
       " Version" : 1
     },
     {
-      "name": "Road_Grad",
+      "name": "Distance",
       "type": "float",
       " Version" : 1
     },
     {
-      "name": "Veh_Spd",
+      "name": "Elevation",
       "type": "float",
       " Version" : 1
     }
-    ,
-    {
-      "name": "Wind_Spd_Proj",
-      "type": "float",
-      " Version" : 1
-    }
-    ,
-    {
-      "name": "Solar_Rad",
-      "type": "float",
-      " Version" : 1
-    }
-    ,
-    {
-      "name": "DistanceChargeStation",
-      "type": "float",
-      " Version" : 1
-    },
-    {
-      "name": "PowerConnector",
-      "type": "float",
-      " Version" : 1
-    }
+ 
         
   ]
 }

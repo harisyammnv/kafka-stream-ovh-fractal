@@ -21,14 +21,10 @@ for row in csvreader:
     key = {"Time": float(row[8])}
     value = { 
             "Time":  float(row[1]),
-            "T_Amb":  float(row[1]),
-            "Phi_Amb": float(row[1]),
-            "Road_Grad":  float(row[1]), 
-            "Veh_Spd": float(row[1]),
-            "Wind_Spd_Proj" : float(row[1]),
-            "Solar_Rad" : float(row[1]),
-            'DistanceChargeStation' : float(row[1]),
-            'PowerConnector' : float(row[1])
+            "Latitude":  float(row[1]),
+            "Longitude": float(row[1]),
+            "Distance":  float(row[1]), 
+            "Elevation": float(row[1])
 
     }
     #Dumping the data on the mqtt client and then this will connect with kafka topics 

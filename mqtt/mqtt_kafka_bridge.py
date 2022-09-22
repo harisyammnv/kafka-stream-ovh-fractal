@@ -9,14 +9,17 @@ from json import loads
 from confluent_kafka.avro import AvroProducer
 import csv
 from time import sleep
+from pathlib import Path
 #defined the kafka topics,bootstrep and Mqtt client to access the data from mqtt protocol. 
 TOPIC = "my-topic-test3"
 KAFKA_BOOTSTRAP_SERVERS_CONS = 'kafka-bs.fractal-kafka.ovh:9094'
 MQTT_HOST = "localhost"
+#Specifying Path
+file_path=Path.home().joinpath('kafka-stream-ovh-fractal/Data-Streaming')
 #loading the schema files for schema validation purpose.
 def load_avro_schema_from_file():
-         key_schema = avro.load("/home/snehasuman/kafka-stream-ovh-fractal/mqtt/schemas/vehicle_ride_key.avsc")
-         value_schema = avro.load("/home/snehasuman/kafka-stream-ovh-fractal/mqtt/schemas/vehicle_ride_value.avsc")
+         key_schema = avro.load(str(file_path)+'/'+'schemas/vehicle_ride_key.avsc')
+         value_schema = avro.load(str(file_path)+'/'+'schemas/vehicle_ride_value.avsc')
 
          return key_schema, value_schema
 

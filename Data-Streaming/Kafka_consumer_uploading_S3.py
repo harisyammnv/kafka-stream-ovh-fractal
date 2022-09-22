@@ -5,7 +5,9 @@ from confluent_kafka.avro import AvroConsumer
 import json
 import toml
 from pathlib import Path
-from upload_service import DataIngestionService
+from upload_ovh_service import DataIngestionService
+file_path=Path.home().joinpath('kafka-stream-ovh-fractal/Data-Processing/config.toml')
+
 '''This function is used to save the data on the ovh cloud, where the
    cfg:  having the credentials for s3 ovh object storage.
    data: list of json data coming from kafka topics 
@@ -22,7 +24,7 @@ def read_messages():
             "schema.registry.url": "http://schemaregistry.fractal-kafka.ovh:8081",
              "group.id": "taxirides.avro.consumer.1",
              "auto.offset.reset": "earliest"}
-    cfg = toml.load("/home/snehasuman/kafka-stream-ovh-fractal/Data-Processing/config.toml")
+    cfg = toml.load(file_path)
     
     consumer = AvroConsumer(consumer_config)
     consumer.subscribe(["my-topic-test3"])
