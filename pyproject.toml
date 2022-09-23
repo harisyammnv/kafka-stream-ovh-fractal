@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "kafka-stream-ovh-fractal"
+version = "0.1.0"
+description = ""
+authors = ["Harisyam Manda <Harisyam.Manda@avl.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+toml = "^0.10.2"
+paho-mqtt = "^1.6.1"
+kafka-python = "^2.0.2"
+confluent-kafka = "^1.9.2"
+boto3 = "^1.24.79"
+python-dotenv = "^0.21.0"
+avro = "^1.11.1"
+
+[tool.poetry.dev-dependencies]
+black = "^22.7.0"
+flake8 = "^5.0.4"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
