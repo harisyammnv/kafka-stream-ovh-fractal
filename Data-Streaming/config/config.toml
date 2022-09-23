@@ -1,9 +1,9 @@
 [OVH-KAFKA]
 kafka_bootstrap_servers= 'kafka-bs.fractal-kafka.ovh:9094'
 kafka_schema_registry = 'http://schemaregistry.fractal-kafka.ovh'
-s3_region='de'
+s3_region='gra'
 
 [S3]
 image_bucket = 'testMultimediaFractal'
 data_bucket = 'testDataFractal'
-s3_region = 'de'
+s3_region = 'gra'
