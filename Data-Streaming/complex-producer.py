@@ -29,15 +29,16 @@ def send_record():
     file = open(str(file_path)+'/'+'data/220129_Smart TMS_Cycles data_V4_2_processed.csv')
     csvreader = csv.reader(file)
     header = next(csvreader)
-    
+    i=0
     for row in csvreader:
+        print(row)
         #key = {"BaseTime(s)": row[1]}
-        value = {"Time": float(row[1]),
-              "Latitude": float(row[1])
-             ,"Longitude": float(row[1]), 
-            "Distance": float(row[1]), 
-            "Elevation": float(row[1])}
-
+        value = {"Time": float(row[i+8]),
+              "Latitude": float(row[i+1])
+             ,"Longitude": float(row[i+3]), 
+            "Distance": float(row[i+4]), 
+            "Elevation": float(row[i+5])}
+         
         try:
             producer.produce(topic='my-topic-test3',  value=value)
         except Exception as e:

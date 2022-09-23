@@ -18,15 +18,16 @@ mqtt_client.connect(MQTT_HOST)
 file = open('data/220129_Smart TMS_Cycles data_V4_2_processed.csv')
 csvreader = csv.reader(file)
 header = next(csvreader)
+i=0
 #This loop will produce data.
 for row in csvreader:
-    key = {"Time": float(row[8])}
+    key = {"Time": float(row[i+8])}
     value = { 
-            "Time":  float(row[1]),
-            "Latitude":  float(row[1]),
-            "Longitude": float(row[1]),
-            "Distance":  float(row[1]), 
-            "Elevation": float(row[1])
+            "Time":  float(row[i+8]),
+            "Latitude":  float(row[i+1]),
+            "Longitude": float(row[i+2]),
+            "Distance":  float(row[i+3]), 
+            "Elevation": float(row[i+4])
            
     }
     #Dumping the data on the mqtt client and then this will connect with kafka topics 
