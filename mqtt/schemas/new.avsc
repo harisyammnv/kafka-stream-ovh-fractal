@@ -1,0 +1,16 @@
+{
+	"namespace": "drive.cycle.outside",
+	"type": "record",
+	"name": "TaxiRide",
+	"fields": [
+		{"name": "Time", "type": ["string", "null"]},
+		{"name": "T_Amb",  "type": ["string", "null"]},
+		{"name": "Phi_Amb", "type": ["string", "null"]},
+		{"name": "Road_Grad", "type": ["string", "null"]},
+		{"name": "Veh_Spd", "type": ["string", "null"]},
+		{"name": "Wind_Spd_Proj", "type": ["string", "null"]},
+		{"name": "Solar_Rad", "type": ["string", "null"]},
+		{"name": "DistanceChargeStation", "type": ["string", "null"]},
+        {"name": "PowerConnector", "type": ["string", "null"]}
+	]
+}
