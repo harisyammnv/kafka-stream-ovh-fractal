@@ -19,13 +19,13 @@ class MQTTKafkaBridge:
                  avro_value_schema_path: Path,
                  config_path: Path,
                  client_name: str) -> None:
+        self.logger = structlog.get_logger()
         self.avro_key_schema_path = avro_key_schema_path
         self.avro_value_schema_path = avro_value_schema_path
         self.config_path = config_path
         self.client_name = client_name
         self.cfg = self._load_config()
-        self.logger = structlog.get_logger()
-    
+        self.key_counter = 0
     def _load_config(self):
         try:
             self.logger.msg("Reading User defined config for MQTT Ingestion !!!")
@@ -38,8 +38,6 @@ class MQTTKafkaBridge:
         # loading the schema files for schema validation purpose.
         self.key_schema = avro.load(str(self.avro_key_schema_path))
         self.value_schema = avro.load(str(self.avro_value_schema_path))
-        
-        self._setup_producer()
     
     def _setup_producer(self):
         # producer Settings
@@ -48,7 +46,7 @@ class MQTTKafkaBridge:
             "schema.registry.url": self.cfg["OVH-KAFKA"]["kafka_schema_registry"],
             "acks": "1",
         }
-        self.producer = AvroProducer(self.producer_config, 
+        return AvroProducer(self.producer_config, 
                                 default_key_schema=self.key_schema,
                                 default_value_schema=self.value_schema)
     def _configure_mqtt(self):
@@ -62,9 +60,8 @@ class MQTTKafkaBridge:
                              Make sure the path is correct")
 
     def on_message(self, client, userdata, message):
-        i = 0
-        key = {"Time": float(i)}
-        i = i + 1
+        key = {"Time": float(self.key_counter)}
+        self.key_counter = self.key_counter + 1
         msg_payload = message.payload
         msg_payload = msg_payload.decode()
         self.logger.msg(f"Received MQTT message at {key}")
@@ -76,14 +73,17 @@ class MQTTKafkaBridge:
 
     def start_bridge(self):
         self._configure_mqtt()
+        self._load_schema()
+        self.producer = self._setup_producer()
         self.mqtt_client.loop_start()
         self.mqtt_client.subscribe(self.cfg["MQTT"]["mqtt_topic"])
         self.mqtt_client.on_message = self.on_message
-        sleep(1)
-        self.mqtt_client.loop_stop()
+        sleep(100)
+        #self.mqtt_client.loop_stop()
         
 if __name__ == "__main__":
     mqtt_kafka = MQTTKafkaBridge(avro_key_schema_path=Path.cwd().joinpath('schemas/drive_cycle_key.avsc'),
                                  avro_value_schema_path=Path.cwd().joinpath('schemas/drive_cycle_value.avsc'), 
-                                 config_path=Path.cwd().joinpath('config/config.toml'))
+                                 config_path=Path.cwd().joinpath('config/config.toml'),
+                                 client_name="BridgeMQTT2Kafka")
     mqtt_kafka.start_bridge()

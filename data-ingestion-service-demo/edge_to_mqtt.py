@@ -9,6 +9,7 @@ import pandas as pd
 from typing import Optional
 from pathlib import Path
 import structlog
+import json
 
 
 class EdgeToMQTTException(Exception):
@@ -21,8 +22,8 @@ class EdgeToMQTT:
                  client_name: Optional[str] = 'DriveCycle_Generator') -> None:
         self.config_path = config_path
         self.client_name = client_name
-        self.cfg = self._load_config()
         self.logger = structlog.get_logger()
+        self.cfg = self._load_config()
 
     def _load_config(self):
         try:
@@ -46,9 +47,10 @@ class EdgeToMQTT:
         if Path.cwd().joinpath(self.cfg['MQTT']['data_file']).exists():
             data = pd.read_csv(Path.cwd().joinpath(self.cfg['MQTT']['data_file']))
             data = data.to_dict(orient='records')
+            self._configure_mqtt()
             for entry in data:
-                self.mqtt_client.publish(self.cfg['MQTT']['mqtt_topic'], entry)
                 self.logger.msg(f"Sending to MQTT Topic - {self.cfg['MQTT']['mqtt_topic']}: {entry}")
+                self.mqtt_client.publish(self.cfg['MQTT']['mqtt_topic'], json.dumps(entry))
                 time.sleep(0.5)
                 
         else:

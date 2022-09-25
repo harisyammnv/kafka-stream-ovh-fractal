@@ -55,7 +55,7 @@
     },
     {
       "name": "SpeedLimit",
-      "type": "float",
+      "type": "int",
       " Version" : 1
     },
     {
@@ -80,7 +80,7 @@
     },
     {
       "name": "WindDirection",
-      "type": "float",
+      "type": "int",
       " Version" : 1
     },
     {
@@ -94,14 +94,19 @@
       " Version" : 1
     },
     {
+      "name": "SolarIrradiance",
+      "type": "int",
+      " Version" : 1
+    },
+    {
       "name": "DistanceToCharging",
       "type": "float",
       " Version" : 1
     },
     {
       "name": "PowerConnector",
-      "type": "float",
+      "type": "int",
       " Version" : 1
-    },
+    }
   ]
 }
