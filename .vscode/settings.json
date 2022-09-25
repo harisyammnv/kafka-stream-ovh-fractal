@@ -4,6 +4,7 @@
     "python.linting.flake8Enabled": true,
     "cSpell.words": [
         "avsc",
+        "boto",
         "mqtt",
         "paho",
         "structlog"
