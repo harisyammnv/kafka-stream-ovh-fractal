@@ -1,5 +1,5 @@
-"""Summary: In this file the kafka produer producing  on the kafka topic then 
-   we will connect this kafka topic data with kafka brodge by using the mqtt protocl."""
+"""Summary: In this file the data produced f producing  on the kafka topic then 
+   we will connect this kafka topic data with kafka bridge by using the mqtt protocol."""
 import paho.mqtt.client as mqtt
 from random import randint
 from confluent_kafka import avro
