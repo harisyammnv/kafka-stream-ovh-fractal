@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 import boto3
 
 
-class DataIngestionServiceException(Exception):
+class UploadServiceException(Exception):
     pass
 
 
@@ -16,15 +16,19 @@ class DataIngestionServiceException(Exception):
    and this function will be called by kafka_consumer_uploading_ovh.py file"""
 
 
-class DataIngestionService:
-    def __init__(self, cfg) -> None:
-        print("Initializing data ingestion service")
+class UploadService:
+    def __init__(self, cfg: dict) -> None:
         load_dotenv()
-        session = boto3.Session(aws_access_key_id="", aws_secret_access_key="")
-        self.s3_client = session.client(
-            "s3", endpoint_url="https://s3.gra.cloud.ovh.net", region_name="gra"
-        )
         self.cfg = cfg
+        session = boto3.Session(aws_access_key_id=os.getenv('OVH_S3_ACCESS_KEY'), 
+                                aws_secret_access_key=os.getenv('OVH_S3_SECRET_KEY'))
+        self.s3_client = session.client("s3", 
+                                        endpoint_url=self.cfg["S3"]["endpoint_url"], 
+                                        region_name=self.cfg["S3"]["s3_region"])
+        self.lakefs_client = boto3.client("s3",
+                                          endpoint_url=self.cfg["LAKE-FS"]["endpoint_url"],
+                                          aws_access_key_id="",
+                                          aws_secret_access_key="")
 
     def _check_bucket(self, bucket_name: str, create_on_check: bool = False) -> bool:
         available_bucket_names = (
@@ -33,7 +37,7 @@ class DataIngestionService:
         if bucket_name in available_bucket_names:
             return True
         if create_on_check:
-            location = "gra"
+            location = self.cfg["S3"]["s3_region"]
             self.s3_client.create_bucket(
                 Bucket=bucket_name, CreateBucketConfiguration=location
             )
@@ -62,16 +66,21 @@ class DataIngestionService:
             else:
                 print(f"Saved {filename}({len(data)}) to {bucket_name}.")
                 return
-        raise DataIngestionServiceException(
+        raise UploadServiceException(
             f"Could not put json object in the bucket: {bucket_name} because of {exception}"
         )
-
-    def _get_filename(self, message, ConsumerRecord) -> str:
-        name_extension = message.key.decode("UTF-8").rsplit(".", 1)
-        if len(name_extension) == 2:
-            name, extension = name_extension
-            extension = f".{extension}"
-        else:
-            name, extension = name_extension[0], ""
-        filename = f"{name}-{message.timestamp}{extension}"
-        return filename
+    
+    def upload_dataset(self, 
+                       lake_fs_bucket: str,
+                       local_file_path: Path,
+                       filename: str):
+        try:
+            with open(local_file_path, "rb") as f:
+                self.lakefs_client.put_object(Body=f, 
+                                    Bucket=lake_fs_bucket, 
+                                    Key=f"main/data_ingestion/{filename}"
+                )
+        except Exception as ex:
+            raise UploadServiceException(
+            f"Could not put object in the bucket: {lake_fs_bucket} because of {ex}"
+        )

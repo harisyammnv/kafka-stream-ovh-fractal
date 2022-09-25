@@ -5,7 +5,7 @@ from confluent_kafka.avro import AvroConsumer
 import json
 import toml
 from pathlib import Path
-from upload_ovh_service import DataIngestionService
+from upload_service import UploadService
 
 file_path = Path.home().joinpath("kafka-stream-ovh-fractal/Data-Processing/config.toml")
 
@@ -16,7 +16,7 @@ file_path = Path.home().joinpath("kafka-stream-ovh-fractal/Data-Processing/confi
 
 
 def save_data(cfg, data, id):
-    data_uploader = DataIngestionService(cfg=cfg)
+    data_uploader = UploadService(cfg=cfg)
     encoded_data = json.dumps(data, indent=2).encode("utf-8")
     data_uploader.upload_binary(
         bucket_name="test-spark-container",
@@ -48,7 +48,7 @@ def read_messages():
         else:
             if message:
                 data.append(message.value())
-                if len(data) >= 10:
+                if len(data) >= 100:
                     id += 1
                     save_data(cfg=cfg, data=data, id=id)
                     data.clear()

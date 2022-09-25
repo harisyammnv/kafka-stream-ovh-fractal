@@ -78,7 +78,7 @@ class MQTTKafkaBridge:
         self.mqtt_client.loop_start()
         self.mqtt_client.subscribe(self.cfg["MQTT"]["mqtt_topic"])
         self.mqtt_client.on_message = self.on_message
-        sleep(100)
+        #sleep(100)
         #self.mqtt_client.loop_stop()
         
 if __name__ == "__main__":
