@@ -6,6 +6,10 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 import boto3
+import json
+import pandas as pd
+import pyarrow as pa
+import pyarrow.parquet as pq
 
 
 class UploadServiceException(Exception):
@@ -56,10 +60,20 @@ class UploadService:
         print(f"Saving {filename} to bucket {bucket_name}.")
         for _ in range(retries):
             try:
-                file_bytestream = io.BytesIO(data)
-                self.s3_client.upload_fileobj(
-                    Fileobj=file_bytestream, Bucket=bucket_name, Key=filename
-                )
+                data = json.loads(data)
+                data_df = pd.DataFrame.from_records(data)
+                table = pa.Table.from_pandas(data_df)
+                writer = pa.BufferOutputStream()
+                pq.write_table(table, writer)
+                body = bytes(writer.getvalue())
+                # file_bytestream = io.BytesIO(data)
+                # self.s3_client.upload_fileobj(
+                #     Fileobj=file_bytestream, Bucket=bucket_name, Key=filename
+                # )
+                self.s3_client.put_object(Body=body, 
+                                          Bucket=bucket_name, 
+                                          Key=filename)
+                
             except Exception as ex:
                 exception = ex
                 time.sleep(rest)
@@ -67,7 +81,7 @@ class UploadService:
                 print(f"Saved {filename}({len(data)}) to {bucket_name}.")
                 return
         raise UploadServiceException(
-            f"Could not put json object in the bucket: {bucket_name} because of {exception}"
+            f"Could not put object in the bucket: {bucket_name} because of {exception}"
         )
     
     def upload_dataset(self, 
