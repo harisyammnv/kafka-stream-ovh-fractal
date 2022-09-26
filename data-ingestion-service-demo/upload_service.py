@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 import boto3
 import json
 import pandas as pd
+import s3fs
 import pyarrow as pa
 import pyarrow.parquet as pq
 
@@ -86,14 +87,24 @@ class UploadService:
     
     def upload_dataset(self, 
                        lake_fs_bucket: str,
-                       local_file_path: Path,
+                       key_path: str,
                        filename: str):
         try:
-            with open(local_file_path, "rb") as f:
-                self.lakefs_client.put_object(Body=f, 
-                                    Bucket=lake_fs_bucket, 
-                                    Key=f"main/data_ingestion/{filename}"
-                )
+            fs = s3fs.S3FileSystem(client_kwargs={'endpoint_url': self.cfg["S3"]["endpoint_url"]})
+            dataset=pq.ParquetDataset(f's3://{self.cfg["S3"]["drive_cycle_bucket"]}/{key_path}', 
+                                      filesystem=fs, 
+                                      metadata_nthreads=2)
+            df = dataset.read().to_pandas()
+
+            table = pa.Table.from_pandas(df)
+            writer = pa.BufferOutputStream()
+            pq.write_table(table, writer)
+            body = bytes(writer.getvalue())
+            
+            self.lakefs_client.put_object(Body=body, 
+                                Bucket=lake_fs_bucket, 
+                                Key=f"main/data_ingestion/{filename}"
+            )
         except Exception as ex:
             raise UploadServiceException(
             f"Could not put object in the bucket: {lake_fs_bucket} because of {ex}"
