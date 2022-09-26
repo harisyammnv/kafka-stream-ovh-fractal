@@ -80,8 +80,13 @@ class DataIngestionService:
                             f"message key: {message.key()} || message value: {message.value()}"
                         )
                         if id % self.cfg["OVH-KAFKA"]["cache_len"] == 0:
-                            cache_num+=1
                             self.logger.msg("Trigger Data Transformation")
+                            lakefs_uploader = UploadService(cfg=self.cfg)
+                            lakefs_uploader.upload_dataset(lake_fs_bucket=self.cfg["LAKE-FS"]["dataset_bucket"],
+                                                           key_path=f'cache-{cache_num}',
+                                                           filename=f'cache-{cache_num}.parquet')
+                            cache_num += 1
+                            
                         self.consumer.commit()
                     else:
                         self.logger.msg("No new messages at this point. Try again later.")
