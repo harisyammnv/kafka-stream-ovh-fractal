@@ -1,4 +1,12 @@
 {
-    "python.linting.pylintEnabled": true,
-    "python.linting.enabled": true
+    "python.linting.pylintEnabled": false,
+    "python.linting.enabled": false,
+    "python.linting.flake8Enabled": true,
+    "cSpell.words": [
+        "avsc",
+        "boto",
+        "mqtt",
+        "paho",
+        "structlog"
+    ]
 }

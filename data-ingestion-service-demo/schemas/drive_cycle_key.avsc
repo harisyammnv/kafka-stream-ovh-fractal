@@ -1,0 +1,7 @@
+
+{
+	"namespace": "drive.cycle.raw",
+	"type": "record",
+	"name": "UC2DriveCycle",
+	"fields": [
+		{"name": "Time", "type": ["float", "null"]}]}

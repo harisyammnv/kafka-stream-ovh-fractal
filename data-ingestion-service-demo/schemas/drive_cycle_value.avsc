@@ -1,0 +1,112 @@
+{
+  "namespace": "drive.cycle.raw",
+  "type": "record",
+  "name": "UC2DriveCycle",
+  "fields": [
+    {
+      "name": "Latitude",
+      "type": "float",
+      " Version" : 1
+    },
+    {
+      "name": "Longitude",
+      "type": "float",
+      " Version" : 1
+    },
+    {
+      "name": "Distance",
+      "type": "float",
+      " Version" : 1
+    },
+    {
+      "name": "Elevation",
+      "type": "float",
+      " Version" : 1
+    },
+    {
+      "name": "RoadSlope",
+      "type": "float",
+      " Version" : 1
+    },
+    {
+      "name": "Curvature",
+      "type": "float",
+      " Version" : 1
+    },
+    {
+      "name": "BaseSpeed",
+      "type": "float",
+      " Version" : 1
+    },
+    {
+      "name": "BaseTime",
+      "type": "float",
+      " Version" : 1
+    },
+    {
+      "name": "TrafficSpeed",
+      "type": "float",
+      " Version" : 1
+    },
+    {
+      "name": "TrafficTime",
+      "type": "float",
+      " Version" : 1
+    },
+    {
+      "name": "SpeedLimit",
+      "type": "int",
+      " Version" : 1
+    },
+    {
+      "name": "Temperature",
+      "type": "float",
+      " Version" : 1
+    },
+    {
+      "name": "Pressure",
+      "type": "float",
+      " Version" : 1
+    },
+    {
+      "name": "Humidity",
+      "type": "float",
+      " Version" : 1
+    },
+    {
+      "name": "WindSpeed",
+      "type": "float",
+      " Version" : 1
+    },
+    {
+      "name": "WindDirection",
+      "type": "int",
+      " Version" : 1
+    },
+    {
+      "name": "VehicleDirection",
+      "type": "float",
+      " Version" : 1
+    },
+    {
+      "name": "WindSpeedProjection",
+      "type": "float",
+      " Version" : 1
+    },
+    {
+      "name": "SolarIrradiance",
+      "type": "int",
+      " Version" : 1
+    },
+    {
+      "name": "DistanceToCharging",
+      "type": "float",
+      " Version" : 1
+    },
+    {
+      "name": "PowerConnector",
+      "type": "int",
+      " Version" : 1
+    }
+  ]
+}
