@@ -32,8 +32,8 @@ class UploadService:
                                         region_name=self.cfg["S3"]["s3_region"])
         self.lakefs_client = boto3.client("s3",
                                           endpoint_url=self.cfg["LAKE-FS"]["endpoint_url"],
-                                          aws_access_key_id="",
-                                          aws_secret_access_key="")
+                                          aws_access_key_id=os.getenv('LAKEFS_ACCESS_KEY'),
+                                          aws_secret_access_key=os.getenv('LAKEFS_SECRET_KEY'))
 
     def _check_bucket(self, bucket_name: str, create_on_check: bool = False) -> bool:
         available_bucket_names = (
@@ -92,8 +92,7 @@ class UploadService:
         try:
             fs = s3fs.S3FileSystem(client_kwargs={'endpoint_url': self.cfg["S3"]["endpoint_url"]})
             dataset=pq.ParquetDataset(f's3://{self.cfg["S3"]["drive_cycle_bucket"]}/{key_path}', 
-                                      filesystem=fs, 
-                                      metadata_nthreads=2)
+                                      filesystem=fs)
             df = dataset.read().to_pandas()
 
             table = pa.Table.from_pandas(df)
