@@ -1,0 +1,24 @@
+[MQTT]
+mqtt_host= "localhost"
+mqtt_port= 1883
+data_file= "data/sample-drive-cycle.csv"
+mqtt_topic= "drive-cycle-raw"
+
+[OVH-KAFKA]
+kafka_bootstrap_servers= 'kafka-bs.fractal-kafka.ovh:9094'
+kafka_schema_registry= "http://152.228.251.146:8081"
+kafka_schema_registry_url= "http://schemaregistry.fractal-kafka.ovh:8081"
+kafka_topic= 'drive-cycle-uc2-onward'
+consumer_group= "taxirides.avro.consumer.1"
+offset_reset= "latest"
+data_cache_len= 100
+cache_len= 5
+
+[S3]
+endpoint_url= "https://s3.gra.cloud.ovh.net"
+drive_cycle_bucket= 'test-spark-container'
+s3_region= 'gra'
+
+[LAKE-FS]
+endpoint_url= "http://fractal.ik-europe.eu/"
+dataset_bucket= "fractal-uc2"

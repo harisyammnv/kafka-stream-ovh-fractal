@@ -1,5 +1,4 @@
 .venv/
 .env
-config.toml
 consumed_data/
 __pycache__/
