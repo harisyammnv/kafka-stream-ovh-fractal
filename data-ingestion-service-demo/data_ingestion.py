@@ -58,8 +58,8 @@ class DataIngestionService:
             self.consumer = self._setup_consumer()
             self.consumer.subscribe([self.cfg["OVH-KAFKA"]["kafka_topic"]])
             data = []
-            id = 1
-            cache_num = 1
+            id = 0
+            cache_num = 0
             # consuming the kafka data and uploading it on the ovh cloud.
             while True:
                 try:
@@ -71,25 +71,28 @@ class DataIngestionService:
                     if message:
                         data.append(message.value())
                         if len(data) >= self.cfg["OVH-KAFKA"]["data_cache_len"]:
+                            if id % self.cfg["OVH-KAFKA"]["cache_len"] == 0:
+                                cache_num += 1
+                                upload = True
                             self._save_data_to_ovh(data=data, id=id, cache_num= cache_num)
                             id += 1
                             data.clear()
                         self.logger.msg(
                             f"Successfully polled a record from "
                             f"Kafka topic: {message.topic()}, partition: {message.partition()}, offset: {message.offset()}\n"
-                            f"message key: {message.key()} || message value: {message.value()}"
                         )
-                        if id % self.cfg["OVH-KAFKA"]["cache_len"] == 0:
-                            self.logger.msg("Trigger Data Transformation")
-                            lakefs_uploader = UploadService(cfg=self.cfg)
-                            lakefs_uploader.upload_dataset(lake_fs_bucket=self.cfg["LAKE-FS"]["dataset_bucket"],
-                                                           key_path=f'cache-{cache_num}',
-                                                           filename=f'cache-{cache_num}.parquet')
-                            cache_num += 1
-                            
                         self.consumer.commit()
                     else:
                         self.logger.msg("No new messages at this point. Try again later.")
+                    if id % self.cfg["OVH-KAFKA"]["cache_len"] == 0 and id != 0 and upload:
+                        self.logger.msg("Trigger Data Transformation")
+                        
+                        lakefs_uploader = UploadService(cfg=self.cfg)
+                        lakefs_uploader.upload_dataset(lake_fs_bucket=self.cfg["LAKE-FS"]["dataset_bucket"],
+                                                        key_path=f'cache-{cache_num}',
+                                                        filename=f'cache-{cache_num}.parquet')
+                        upload = False
+
         except Exception as ex:
             raise DataIngestionServiceException(f"Cannot consume messages because: {ex}")
 

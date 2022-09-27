@@ -11,7 +11,7 @@ kafka_schema_registry_url= "http://schemaregistry.fractal-kafka.ovh:8081"
 kafka_topic= 'drive-cycle-uc2-onward'
 consumer_group= "taxirides.avro.consumer.1"
 offset_reset= "latest"
-data_cache_len= 100
+data_cache_len= 10
 cache_len= 5
 
 [S3]
