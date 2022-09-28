@@ -9,6 +9,7 @@ kafka_bootstrap_servers= 'kafka-bs.fractal-kafka.ovh:9094'
 kafka_schema_registry= "http://152.228.251.146:8081"
 kafka_schema_registry_url= "http://schemaregistry.fractal-kafka.ovh:8081"
 kafka_topic= 'drive-cycle-uc2-onward'
+# "dummy-topic-test1"
 consumer_group= "taxirides.avro.consumer.1"
 offset_reset= "latest"
 data_cache_len= 10
