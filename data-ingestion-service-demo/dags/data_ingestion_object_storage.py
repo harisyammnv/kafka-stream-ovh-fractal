@@ -23,7 +23,7 @@ from airflow_provider_kafka.operators.produce_to_topic import ProduceToTopicOper
 default_args = {
     "owner": "fractal-uc2-avl",
     "depend_on_past": False,
-    "start_date": datetime(2021, 7, 20),
+    "start_date": datetime(2022, 9, 29),
     "email_on_failure": False,
     "email_on_retry": False,
     "retries": 0,
@@ -107,8 +107,9 @@ with DAG(
     "streaming-data-ingestion",
     default_args=default_args,
     description="Demo of Streaming Data Ingestion Job in FRACTAL Cloud",
-    schedule_interval=timedelta(days=1),
-    start_date=datetime(2021, 1, 1),
+    schedule_interval='*/5 * * * *',
+    dagrun_timeout=timedelta(seconds=5),
+    start_date=datetime(2022, 9, 29),
     catchup=False,
     tags=["demo-streaming-data-ingestion"],
 ) as dag:
